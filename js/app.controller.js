@@ -77,31 +77,21 @@ function showLocation() {
     locService.getLocs().then(console.log)
 }
 
+
 function renderTable(names){
-    let strHtml = '';
-        names.forEach(location => {
+    let strHtml = '<ul>';
+    
+    names.forEach(location => {
         let date = new Date(location.time);
         date = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        strHtml+= `
-        <tr>
-        <td>location name: ${location.name}</td>
-      </tr>
-    <tr>
-    <td> location lat :${location.lat}</td>
-    </tr>
-    <tr>
-    <td> location lng :${location.lng}</td>
-    </tr>
-    <tr>
-    <td>time of last visit : ${date}</td>
-    </tr>
-    <tr>
-    <td>Actions
-    <button onclick="onRemoveLocation(${location.lat}, ${location.lng})"> remove location </button>
-    <button onclick="onGoto(${location.lat}, ${location.lng})"> go to location </button>
-    </td>
-        `
+        strHtml+= ` 
+        <li>
+            <button onclick="onGoto(${location.lat}, ${location.lng})">  GO </button>
+            <button onclick="onRemoveLocation(${location.lat}, ${location.lng})"> Remove </button>
+            ${location.name}, lat :${location.lat}, lng :${location.lng}, time: ${date}, 
+        <li> `
     });
+    strHtml+= '<ul>'
     document.querySelector(".info").innerHTML = strHtml;
 }
 
