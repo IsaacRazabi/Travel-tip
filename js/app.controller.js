@@ -77,9 +77,11 @@ function showLocation() {
     locService.getLocs().then(console.log)
 }
 
-let strHtml = '';
 function renderTable(names){
-    names.forEach(location => {
+    let strHtml = '';
+        names.forEach(location => {
+        let date = new Date(location.time);
+        date = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         strHtml+= `
         <tr>
         <td>location name: ${location.name}</td>
@@ -91,7 +93,7 @@ function renderTable(names){
     <td> location lng :${location.lng}</td>
     </tr>
     <tr>
-    <td>time of last visit : ${location.time}</td>
+    <td>time of last visit : ${date}</td>
     </tr>
     <tr>
     <td>Actions
@@ -108,4 +110,7 @@ function onRemoveLocation(lat, lng) {
     onGetLocs();
   }
   
-  
+function onGoto(lat,lng){
+    var latLng = new google.maps.LatLng(lat,lng);
+    gMap.setCenter(latLng);
+}  
