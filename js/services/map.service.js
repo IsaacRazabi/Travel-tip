@@ -2,9 +2,14 @@
 export const mapService = {
     initMap,
     addMarker,
-    panTo
+    panTo,
+    gMap,
+    onGoto
 }
 var gMap;
+
+window.onGoto=onGoto;
+
 
 function initMap(lat = 32.0749831, lng = 34.9120554) {
     return _connectGoogleApi()
@@ -46,4 +51,9 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+function onGoto(lat, lng) {
+    console.log('onGoto(lat, lng)',lat, lng)
+    gMap.setCenter(new google.maps.LatLng(lat ,lng));
 }
