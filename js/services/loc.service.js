@@ -46,7 +46,7 @@ locs[idx].time=time
 storageService.saveToStorage('LOCATION',locs)
 }
 
-function removeLocation (lat,lng){
+function removeLocation(lat,lng){
 
     locs.forEach((location,idx)=>{
         if(location.lat===lat && location.lng===lng) locs.splice(idx, 1);

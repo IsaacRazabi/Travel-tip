@@ -9,6 +9,8 @@ window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 window.copyLoacation = copyLoacation;
+window.onRemoveLocation = onRemoveLocation;
+window.onGoto = onGoto;
 
 
 function onInit() {
@@ -19,9 +21,9 @@ function onInit() {
                 mapService.addMarker(event.latLng.toJSON());
                 let time = Date.now()
                 let name = prompt('what is the name of this location')
-               locService.saveLocations(name,event.latLng.toJSON(),time)
-               onGetLocs()
-             });
+                locService.saveLocations(name, event.latLng.toJSON(), time)
+                onGetLocs()
+            });
         })
         .catch(() => console.log('Error: cannot init map'));
 }
@@ -34,7 +36,7 @@ function getPosition() {
 }
 
 function onAddMarker() {
-   
+
     console.log('Adding a marker');
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
@@ -65,7 +67,7 @@ function onPanTo() {
 }
 
 
-function copyLoacation(){
+function copyLoacation() {
     console.log('copyLoacation(): copy text')
     var copyText = document.querySelector('input[name="search-location"]')
     copyText.select();
@@ -78,29 +80,29 @@ function showLocation() {
 }
 
 
-function renderTable(names){
+function renderTable(names) {
     let strHtml = '<ul>';
-    
+
     names.forEach(location => {
         let date = new Date(location.time);
         date = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-        strHtml+= ` 
+        strHtml += ` 
         <li>
             <button onclick="onGoto(${location.lat}, ${location.lng})">  GO </button>
             <button onclick="onRemoveLocation(${location.lat}, ${location.lng})"> Remove </button>
             ${location.name}, lat :${location.lat}, lng :${location.lng}, time: ${date}, 
         <li> `
     });
-    strHtml+= '<ul>'
+    strHtml += '<ul>'
     document.querySelector(".info").innerHTML = strHtml;
 }
 
 function onRemoveLocation(lat, lng) {
-    removeLocation (lat,lng)
+    locService.removeLocation(lat, lng);
     onGetLocs();
-  }
-  
-function onGoto(lat,lng){
-    var latLng = new google.maps.LatLng(lat,lng);
-    gMap.setCenter(latLng);
-}  
+}
+
+// function onGoto(lat, lng) {
+//     var latLng = new google.maps.LatLng(lat, lng);
+//     gMap.setCenter(lat, lng);
+// }
