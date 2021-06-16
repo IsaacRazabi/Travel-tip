@@ -80,12 +80,15 @@ function showLocation() {
 
 function renderTable(names){
     let strHtml = '<ul>';
+    
     names.forEach(location => {
+        let date = new Date(location.time);
+        date = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
         strHtml+= ` 
         <li>
             <button onclick="onGoto(${location.lat}, ${location.lng})">  GO </button>
             <button onclick="onRemoveLocation(${location.lat}, ${location.lng})"> Remove </button>
-            ${location.name}, lat :${location.lat}, lng :${location.lng}, time: ${location.time}, 
+            ${location.name}, lat :${location.lat}, lng :${location.lng}, time: ${date}, 
         <li> `
     });
     strHtml+= '<ul>'
