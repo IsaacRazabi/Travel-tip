@@ -6,6 +6,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.copyLoacation = copyLoacation;
 
 function onInit() {
     mapService.initMap()
@@ -50,4 +51,14 @@ function onGetUserPos() {
 function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
+}
+
+
+function copyLoacation(){
+    console.log('copyLoacation(): copy text')
+    var copyText = document.querySelector('input[name="search-location"]')
+    copyText.select();
+    copyText.setSelectionRange(0, 99999)  //  For mobile devices
+    document.execCommand("copy");
+    alert("Copied the text: " + copyText.value);
 }
