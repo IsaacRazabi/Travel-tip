@@ -11,18 +11,59 @@
     <button onclick="onAddMarker()" class="btn-add-marker">
       Add Marker Speific Location
     </button>
-    <button onclick="onGetUserPos()" class="btn-user-pos">
-      Get User Position
-    </button>
+   <button onclick="onGetUserPos()" class="btn-user-pos"> 
+     Get User Position
+    </button> 
+    <link rel="stylesheet" href="css/main.css">
+</head> -->
+<body>
+    <div class="container">
+        <nav>
+            <h1>Travel Tip</h1>
+            <div class="search flex">
+                <form>
+                    <input type="search" name="search-location">
+                    <input type="submit" value="Go">
+                </form>
+                <button name="btm-mylocation">My location</button>
+            </div>
+        </nav>
+    <header >
+        <p>Location : <span name="correntLocationDisplay">test</span></p>
+        <button onclick="copyLoacation()">Copy location</button>
+    </header>
+    <main class="flex">
+        <aside>
+            <div class="weather">
+                weather
+            </div>
+            <div class="location-table">
+                location-table
+                <table class="info"> </table>
+            </div>
+        </aside>
+        <div class="googleMap">
+            <div id="map" style="width: 100%; height: 100%;"></div>
+        </div>
+    </main>
+    
+    
+    <button onclick="onAddMarker()" class="btn-add-marker">Add Marker Speific Location</button>
+    <button onclick="onGetUserPos()" class="btn-user-pos">Get User Position</button>
     <button onclick="onGetLocs()" class="btn-get-locs">Get Locations</button>
     <button onclick="onPanTo()" class="btn-pan">Pan Map to Tokyo</button>
 
-    <p>You are at: <span class="user-pos"></span></p>
-    <p>Locations: <span class="locs"></span></p>
+    <!-- <p>You are at: <span class="user-pos"></span></p>
+    <p>Locations: <span class="locs"></span></p> -->
 
-    <table class="info" border="1">
-    </table>
+
 
     <script type="module" src="js/app.controller.js"></script>
   </body>
 </html>
+    <!-- </div>  
+    
+
+<script type="module" src="js/app.controller.js"></script>
+</body>
+</html> -->

@@ -8,6 +8,7 @@ window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
+window.copyLoacation = copyLoacation;
 
 
 function onInit() {
@@ -19,7 +20,7 @@ function onInit() {
                 let time = Date.now()
                 let name = prompt('what is the name of this location')
                locService.saveLocations(name,event.latLng.toJSON(),time)
-               showLocation() 
+               onGetLocs()
              });
         })
         .catch(() => console.log('Error: cannot init map'));
@@ -42,6 +43,7 @@ function onGetLocs() {
     locService.getLocs()
         .then(locs => {
             console.log('Locations:', locs)
+            renderTable(locs)
             document.querySelector('.locs').innerText = JSON.stringify(locs)
         })
 }
@@ -63,28 +65,21 @@ function onPanTo() {
 }
 
 
-function showLocation() {
-    locService.getLocs().then(console.log)
-}
-
 let strHtml = '';
 function renderTable(names){
-    console.log(names);
-    let locations = showLocation();
-    console.log(locations);
-    locations.forEach(location => {
+    names.forEach(location => {
         strHtml+= `
         <tr>
-        <td>${location.name}</td>
+        <td>location name: ${location.name}</td>
       </tr>
     <tr>
-    <td>${location.lat}</td>
+    <td> location lat :${location.lat}</td>
     </tr>
     <tr>
-    <td>${location.lng}</td>
+    <td> location lng :${location.lng}</td>
     </tr>
     <tr>
-    <td>${location.time}</td>
+    <td>time of last visit : ${location.time}</td>
     </tr>
     <tr>
     <td>Actions
@@ -93,15 +88,20 @@ function renderTable(names){
     </td>
         `
     });
+    document.querySelector(".info").innerHTML = strHtml;
 }
-document.querySelector(".info").innerHTML = strHtml;
-    // document.querySelector("name").innerHTML = position.name;
-    // document.querySelector("latitude").innerHTML = position.lat;
-    // document.querySelector("longitude").innerHTML = position.lat;
-    // document.querySelector("accuracy").innerHTML = 20;
+
+function onRemoveLocation(lat, lng) {
+    removeLocation (lat,lng)
+    onGetLocs();
+  }
   
-    // var date = new Date(time);
-    // document.getElementById("timestamp").innerHTML =
-    //   date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
-    // initMap(position.coords.latitude, position.coords.longitude);
   
+function copyLoacation(){
+    console.log('copyLoacation(): copy text')
+    var copyText = document.querySelector('input[name="search-location"]')
+    copyText.select();
+    copyText.setSelectionRange(0, 99999)  //  For mobile devices
+    document.execCommand("copy");
+    alert("Copied the text: " + copyText.value);
+}
