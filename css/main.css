@@ -1,16 +1,26 @@
+@import url('https://fonts.googleapis.com/css2?family=Pacifico&display=swap');
+
 *{box-sizing: border-box;}
 
 
+
+/* 
 body{
     text-align: center;
-}
+} */
 
+h1{
+    font-family: 'Pacifico', cursive;
+    font-size:2em;
+    
+}
 .flex{
     display: flex;
 }
 
-.search{
+.search form{
     text-align: center;
+    /* margin-left: 350px; */
 }
 .container{
     width: 1000px;
@@ -47,4 +57,7 @@ body{
 }
 .btm-mylocation{
     margin-left: 10px;
+}
+.center{
+    text-align: center;
 }

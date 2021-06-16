@@ -65,6 +65,18 @@ function onPanTo() {
 }
 
 
+function copyLoacation(){
+    console.log('copyLoacation(): copy text')
+    var copyText = document.querySelector('input[name="search-location"]')
+    copyText.select();
+    copyText.setSelectionRange(0, 99999)  //  For mobile devices
+    document.execCommand("copy");
+    alert("Copied the text: " + copyText.value);
+}
+function showLocation() {
+    locService.getLocs().then(console.log)
+}
+
 let strHtml = '';
 function renderTable(names){
     names.forEach(location => {
@@ -97,11 +109,3 @@ function onRemoveLocation(lat, lng) {
   }
   
   
-function copyLoacation(){
-    console.log('copyLoacation(): copy text')
-    var copyText = document.querySelector('input[name="search-location"]')
-    copyText.select();
-    copyText.setSelectionRange(0, 99999)  //  For mobile devices
-    document.execCommand("copy");
-    alert("Copied the text: " + copyText.value);
-}
