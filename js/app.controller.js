@@ -1,20 +1,29 @@
 import { locService } from './services/loc.service.js'
 import { mapService } from './services/map.service.js'
 
+
+
 window.onload = onInit;
 window.onAddMarker = onAddMarker;
 window.onPanTo = onPanTo;
 window.onGetLocs = onGetLocs;
 window.onGetUserPos = onGetUserPos;
 
+
 function onInit() {
     mapService.initMap()
-        .then(() => {
+        .then((map) => {
             console.log('Map is ready');
+            map.addListener("click", (event) => {
+                mapService.addMarker(event.latLng.toJSON());
+                let time = Date.now()
+                let name = prompt('what is the name of this location')
+               locService.saveLocations(name,event.latLng.toJSON(),time)
+               showLocation() 
+             });
         })
         .catch(() => console.log('Error: cannot init map'));
 }
-
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
     console.log('Getting Pos');
@@ -24,6 +33,7 @@ function getPosition() {
 }
 
 function onAddMarker() {
+   
     console.log('Adding a marker');
     mapService.addMarker({ lat: 32.0749831, lng: 34.9120554 });
 }
@@ -51,3 +61,47 @@ function onPanTo() {
     console.log('Panning the Map');
     mapService.panTo(35.6895, 139.6917);
 }
+
+
+function showLocation() {
+    locService.getLocs().then(console.log)
+}
+
+let strHtml = '';
+function renderTable(names){
+    console.log(names);
+    let locations = showLocation();
+    console.log(locations);
+    locations.forEach(location => {
+        strHtml+= `
+        <tr>
+        <td>${location.name}</td>
+      </tr>
+    <tr>
+    <td>${location.lat}</td>
+    </tr>
+    <tr>
+    <td>${location.lng}</td>
+    </tr>
+    <tr>
+    <td>${location.time}</td>
+    </tr>
+    <tr>
+    <td>Actions
+    <button onclick="onRemoveLocation(${location.lat}, ${location.lng})"> remove location </button>
+    <button onclick="onGoto(${location.lat}, ${location.lng})"> go to location </button>
+    </td>
+        `
+    });
+}
+document.querySelector(".info").innerHTML = strHtml;
+    // document.querySelector("name").innerHTML = position.name;
+    // document.querySelector("latitude").innerHTML = position.lat;
+    // document.querySelector("longitude").innerHTML = position.lat;
+    // document.querySelector("accuracy").innerHTML = 20;
+  
+    // var date = new Date(time);
+    // document.getElementById("timestamp").innerHTML =
+    //   date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
+    // initMap(position.coords.latitude, position.coords.longitude);
+  
