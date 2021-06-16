@@ -16,7 +16,7 @@ function getLocs() {
     return new Promise((resolve, reject) => { 
         setTimeout(() => {
             resolve(locs);
-        }, 2000)
+        }, 0)
     });
 }
 

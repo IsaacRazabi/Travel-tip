@@ -11,7 +11,7 @@ window.onGetUserPos = onGetUserPos;
 window.copyLoacation = copyLoacation;
 window.onRemoveLocation = onRemoveLocation;
 window.onGoto = onGoto;
-
+window.goToGPS = goToGPS;
 
 function onInit() {
     mapService.initMap()
@@ -26,6 +26,7 @@ function onInit() {
             });
         })
         .catch(() => console.log('Error: cannot init map'));
+    onGetLocs()
 }
 // This function provides a Promise API to the callback-based-api of getCurrentPosition
 function getPosition() {
@@ -82,7 +83,6 @@ function showLocation() {
 
 function renderTable(names) {
     let strHtml = '<ul>';
-
     names.forEach(location => {
         let date = new Date(location.time);
         date = date.getHours() + ":" + date.getMinutes() + ":" + date.getSeconds();
@@ -101,6 +101,14 @@ function onRemoveLocation(lat, lng) {
     locService.removeLocation(lat, lng);
     onGetLocs();
 }
+
+function goToGPS() {
+    const myLocation = document.querySelector('input[name="search-location"]').value;
+    console.log('location:', myLocation);
+    location.replace(`https://www.mapdevelopers.com/geocode_tool.php?address=${myLocation}`);
+}
+
+
 
 // function onGoto(lat, lng) {
 //     var latLng = new google.maps.LatLng(lat, lng);
